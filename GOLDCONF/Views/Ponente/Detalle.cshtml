@@ -1,0 +1,246 @@
+﻿@{ var ponente = (Ponente)Model;
+    var conferencias = (List<Conferencia>)ViewBag.Conferencias;
+    var compras = (List<Comprar>)ViewBag.Compra;
+    bool estado = false;
+    int presentes = 0;
+    var cuenta = (List<Cuenta>)ViewBag.Cuenta;
+    int cuentaNum = cuenta.Count();
+}
+
+<head>
+    <link href="/css/Detalle.css" rel="stylesheet" />
+</head>
+
+<body class="index">
+
+    <div class="barra">
+        <div class="contenedor clearfix">
+            <div class="logo">
+                <a href="/Home">
+                    <img src="/img/LOGO.png" alt="logo">
+                </a>
+            </div>
+
+            <div class="menu-movil">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav class="navegacion-principal clearfix">
+                @if (ViewBag.Usuario != "LanRhXXX")
+                {
+                    <a href="/conferencia/conferencias">Conferencias</a>
+                    <a href="/Ponente/ponente">Invitados</a>
+                }
+                else
+                {
+                    <a href="/conferencia/Pasadas">Mis Conferencias</a>
+                    <a href="/conferencia/Futuras">Calendario</a>
+                    <a href="/Ponente/ponente">Invitados</a>
+                }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a href="/Auth/Login">Login</a>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/Auth/Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+                    <a href="/Cuenta/Index">@User.Claims.FirstOrDefault().Value</a>
+                }
+            </nav>
+        </div>
+        <!--.contenedor-->
+    </div>
+    <!--.barra-->
+    <!--.Contenido-->
+
+
+    <div class="contenedor">
+
+        @if (ViewBag.Usuario != "LanRhXXX")
+        {
+            <a href="/ponente/edit?id=@ponente.Id" class="button hollow"> Editar Ponente</a>
+        }
+        <p></p>
+        <div class="contenedor-imagen float-right">
+            <img class="imgRedonda" src="@ponente.Imagen" alt="Imagen de Ponente">
+            <br />
+            <a class="button-XMEN" href="https://www.facebook.com/"><i class="fa fa-facebook"></i> @ponente.NomApe</a>
+            <br />
+            <a class="button-XMEN" href="https://twitter.com/"><i class="fa fa-twitter"></i> @ponente.NomApe</a>
+            <br />
+            <a class="button-XMEN" href="https://www.youtube.com/"><i class="fa fa-youtube-play"></i> @ponente.NomApe</a>
+            <br />
+            <a class="button-XMEN" href="https://www.instagram.com/"><i class="fa fa-instagram"></i> @ponente.NomApe</a>
+
+        </div>
+        <div>
+            <section class="contenedor-ponente float-left">
+
+                <h2>@ponente.NomApe</h2>
+
+                <p><strong>Título Profesional: </strong> @ponente.Especialidad</p>
+                <p><strong>Celular: </strong> @ponente.Telefono</p>
+                <p><strong>Email: </strong> @ponente.Email</p>
+
+                <strong>Educación y Logros</strong>
+                <p>@ponente.Logros</p>
+
+                <strong>Experiencia Laboral</strong>
+                <p>@ponente.Experiencia</p>
+            </section>
+        </div>
+        <!-- END .invitado -->
+    </div>
+
+    <div class="contenedor">
+        <section class="seccion contenedor">
+
+            <h4 class="TitCardDet">Mis próximas conferencias (@ViewBag.Cursos)</h4>
+            <br />
+            <ul class="lista-precios clearfix">
+                @foreach (var item in conferencias)
+                {
+                    <li>
+                        <div class="tabla-precio">
+                            @foreach (var compra in compras)
+                            {
+                                if (compra.IdConferencia == @item.Id)
+                                {
+                                    estado = true;
+                                    presentes++;
+                                }
+                            }
+                            @if (estado)
+                            {
+                                <div class="calendariocomprado">
+                                    <h3>@item.TituloConf</h3>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="calendario">
+                                    <h3>@item.TituloConf</h3>
+                                </div>
+                            }
+
+                            <a class="course-card--image-wrapper--Sxd90" href="/conferencia/Detalle?idConferencia=@item.Id">
+                                <img alt="" width="240" height="135" src="@item.ImagePath" srcset="@item.ImagePath 1x, @item.ImagePath 2x">
+                            </a>
+
+                            <div> __________________________</div>
+                            <ul>
+                                <li><i class="fa fa-user" aria-hidden="true"></i> @item.Ponentes.NomApe</li>
+                                <li><i class="fa fa-clock-o" aria-hidden="true"></i> @string.Format("{0: hh:mm tt}", item.FechaConf)</li>
+                                <li><i class="fa fa-calendar" aria-hidden="true"></i> @string.Format("{0:dd MMMM yyyy}", item.FechaConf)</li>
+                            </ul>
+                            @if (ViewBag.Usuario != "LanRhXXX")
+                            {
+                                <a href="/#" class="button-green hollow"> Registrados: @presentes</a>
+                                presentes = 0;
+                            }
+                            else
+                            {
+                                if (cuentaNum > 0)
+                                {
+                                    if (estado)
+                                    {
+                                        <a href="#" class="button-green hollow">Conferencia comprada</a>
+                                        estado = false;
+                                        presentes = 0;
+                                    }
+                                    else
+                                    {
+                                        foreach (var cuen in cuenta)
+                                        {
+                                            <a href="#" class="button hollow" onclick="Registrar(@item.Id,'@item.TituloConf',@item.PrecioConf,@cuen.Amount)">@string.Format("{0:N2}", item.PrecioConf) S/.</a>
+                                            presentes = 0;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <a href="/Cuenta/Crear" class="button hollow">Empezar a comprar</a>
+                                }
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <div class="contenedor clearfix">
+            <div class="footer-informacion">
+                <h3>Sobre <span>gold conference</span></h3>
+                <p>
+                    Somos su conexión virtual a los conferencistas más destacadas y renombradas de Perú, Latinoamérica y el Mundo. Actualmente, abarcamos el continente americano acercando las mentes más brillantes de todo el mundo a las empresas e instituciones que buscan una figura sobresaliente para sus eventos privados y corporativos. Contamos con más de 20 conferencistas de una gran variedad de disciplinas centradas únicamente en tecnologías como HTML5, XML, CSS, JavaScript, PHP, WordPress), entre otras.
+                    En GOLD CONFERENCE tenemos el ponente ideal para su reunión y presupuesto.
+                </p>
+            </div>
+
+            <div class="ultimos-tweets">
+                <h3>Últimos <span>tweets</span></h3>
+                <a class="twitter-timeline" data-height="400" data-theme="light" data-link-color="#fe4918" href="https://twitter.com/gold_conference">Tweets by </a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+
+            <div class="menu">
+                <h3>Redes <span>sociales</span></h3>
+                <nav class="redes-sociales">
+                    <a href="https://www.facebook.com/Gold-Conference-Online-101111435084124/"><i class="fa fa-facebook"></i></a>
+                    <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                    <a href="https://www.youtube.com/"><i class="fa fa-youtube-play"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+                </nav>
+            </div>
+        </div>
+
+        <p class="copyright">
+            Todos los derechos Reservados GOLD CONFERENCE 2020.
+        </p>
+
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="/js/Nuestro.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</body>
+
+<script>
+    function Registrar(idF, titulo, monto, saldo) {
+
+        var dataString = "idF=" + idF + "&titulo=" + titulo + "&monto=" + monto;
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Estás por comprar la conferencia " + titulo,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, comprar!'
+        }).then((result) => {
+            if (result.isConfirmed && saldo >= monto) {
+                $.ajax({
+                    url: "/conferencia/comprar",
+                    type: "get",
+                    data: dataString
+                });
+                Swal.fire(
+                    'Comprado!',
+                    'Se añadió a tu listas de conferencias',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Cancelado!',
+                    'No tiene suficiente saldo en su cuenta',
+                    'error'
+                )
+            }
+        });
+    }
+</script>

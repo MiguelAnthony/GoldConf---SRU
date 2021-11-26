@@ -1,0 +1,42 @@
+{
+  "id": "8915d84d-cf98-4f3c-9431-08379651dcc7",
+  "version": "2.0",
+  "name": "HomeTest",
+  "url": "https://localhost:44333/",
+  "tests": [{
+    "id": "40674cd3-4835-4faa-bc45-f5a5ef655bb4",
+    "name": "Index_Test",
+    "commands": [{
+      "id": "ebe1807e-a857-4d9b-b745-5362a1fc3079",
+      "comment": "",
+      "command": "open",
+      "target": "https://localhost:44333/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d1825329-6567-4499-9cdb-9e98164b53d3",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=Correcto",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "99b01f20-dc6c-4c20-a9f8-bedcb62aa7a1",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "592e5dcf-9118-46ca-b91e-dceeddc0c3b5",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://localhost:44333/"],
+  "plugins": []
+}

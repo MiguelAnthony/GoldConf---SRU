@@ -1,0 +1,57 @@
+﻿<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+@{ var ponente = (Ponente)Model; }
+
+<h1>Registrar Ponente</h1>
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <form action="/ponente/registrar" enctype="multipart/form-data" method="post">
+
+            <div class="form-group">
+                Imagen
+                <input type="file" class="form-control" name="Image" />
+
+            </div>
+
+            <div class="form-group">
+                <label>Nombres y Apellidos</label>
+                <input type="text" class="form-control" placeholder="Nombres y Apellidos" name="NomApe" />
+                <p id="incorrect">@Html.ValidationMessage("NomApe")</p>
+            </div>
+
+            <div class="form-group">
+                <label>Especialidad</label>
+                <input type="text" class="form-control" placeholder="Especialidad" name="Especialidad" />
+                <p id="incorrect">@Html.ValidationMessage("Especialidad")</p>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Email" name="email" />
+                <p id="incorrect">@Html.ValidationMessage("Email")</p>
+            </div>
+
+            <div class="form-group">
+                <label>Telefono</label>
+                <input type="text" class="form-control" placeholder="Telefono" name="telefono" />
+                <p id="incorrect">@Html.ValidationMessage("Telefono")</p>
+            </div>
+
+            <div class="form-group">
+                <label>Educación y Logros</label>
+                <input type="text" class="form-control" placeholder="Educación y Logros" name="Logros" />
+                <p id="incorrect">@Html.ValidationMessage("Logros")</p>
+            </div>
+
+            <div class="form-group">
+                <label>Experiencia laboral</label>
+                <input type="text" class="form-control" placeholder="Experiencia laboral" name="Experiencia" />
+                <p id="incorrect">@Html.ValidationMessage("Experiencia")</p>
+            </div>
+
+            <button class="btn btn-primary">Registrar</button>
+
+        </form>
+    </div>
+</div>

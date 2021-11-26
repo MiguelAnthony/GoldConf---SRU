@@ -1,0 +1,6 @@
+projectKey=project-GOLDCONF
+serverUrl=https://sonar.lumenes.tk
+serverVersion=8.9.1.44547
+dashboardUrl=https://sonar.lumenes.tk/dashboard?id=project-GOLDCONF
+ceTaskId=AXoSugUKPLeTamaczBTp
+ceTaskUrl=https://sonar.lumenes.tk/api/ce/task?id=AXoSugUKPLeTamaczBTp

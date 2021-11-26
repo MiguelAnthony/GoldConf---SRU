@@ -1,0 +1,9 @@
+Z
+QC:\Users\Edwin\Documents\GOLDCONF\GoldConf.Test\Controllers\AuthControllerTest.csutf-8a
+XC:\Users\Edwin\Documents\GOLDCONF\GoldConf.Test\Controllers\ConferenciaControllerTest.csutf-8\
+SC:\Users\Edwin\Documents\GOLDCONF\GoldConf.Test\Controllers\CuentaControllerTest.csutf-8Z
+QC:\Users\Edwin\Documents\GOLDCONF\GoldConf.Test\Controllers\HomeControllerTest.csutf-8]
+TC:\Users\Edwin\Documents\GOLDCONF\GoldConf.Test\Controllers\PonenteControllerTest.csutf-8}
+rC:\Users\Edwin\.nuget\packages\microsoft.net.test.sdk\16.5.0\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.Program.csutf-8z
+oC:\Users\Edwin\Documents\GOLDCONF\GoldConf.Test\obj\Debug\net5.0\.NETCoreApp,Version=v5.0.AssemblyAttributes.csutf-8i
+^C:\Users\Edwin\Documents\GOLDCONF\GoldConf.Test\obj\Debug\net5.0\GoldConf.Test.AssemblyInfo.csutf-8

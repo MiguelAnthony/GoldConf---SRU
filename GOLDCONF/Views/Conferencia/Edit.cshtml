@@ -1,0 +1,85 @@
+﻿<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+@{ var conferencia = (Conferencia)Model; }
+<h1>Editar Conferencia</h1>
+
+<form action="/conferencia/edit" method="post">
+
+    <input type="hidden" name="Id" value="@conferencia.Id" />
+    <input type="hidden" name="ImagePath" value="@conferencia.ImagePath" />
+
+    <div class="form-group">
+        <label>Nombre de Conferencista</label>
+        <select name="PonenteId" class="form-control">
+            <option value="">-- Selecciona una opcion --</option>
+            @foreach (var item in ViewBag.Ponentes)
+            {
+                @if (conferencia.Ponentes == item)
+                {
+                    <option value="@item.Id" selected>@item.NomApe</option>
+                }
+                else
+                {
+                    <option value="@item.Id">@item.NomApe</option>
+                }
+            }
+        </select>
+        @Html.ValidationMessage("NameConf")
+    </div>
+
+    <div class="form-group">
+        <label>Fecha</label>
+        <input type="datetime-local" class="form-control" placeholder="Fecha" name="FechaConf" value="@string.Format("{0:yyyy-MM-ddTHH:mm}",conferencia.FechaConf)" />
+        @Html.ValidationMessage("FechaConf")
+    </div>
+
+    <div class="form-group">
+        <label>Título de Conferencia</label>
+        <input type="text" class="form-control" placeholder="Titulo" name="TituloConf" value="@conferencia.TituloConf" />
+        @Html.ValidationMessage("TituloConf")
+    </div>
+
+    <div class="form-group">
+        <label>Precio</label>
+        <input type="number" class="form-control" placeholder="Precio" name="PrecioConf" value="@conferencia.PrecioConf" />
+        @Html.ValidationMessage("PrecioConf")
+    </div>
+
+    <div class="form-group">
+        <label>Detalle de la Conferencia</label>
+        <textarea type="text" name="DetalleConf" placeholder="Detalle" class="form-control" value="@conferencia.DetalleConf"></textarea>
+        @Html.ValidationMessage("DetalleConf")
+    </div>
+
+    <div class="form-group">
+        <label>Aprendizajes de la conferencia</label>
+        <input type="text" class="form-control" placeholder="Aprendizaje" name="Ap1" value="@conferencia.Ap1" />
+        @Html.ValidationMessage("Ap1")
+        <input type="text" class="form-control" placeholder="Aprendizaje" name="Ap2" value="@conferencia.Ap2" />
+        @Html.ValidationMessage("Ap2")
+        <input type="text" class="form-control" placeholder="Aprendizaje" name="Ap3" value="@conferencia.Ap3" />
+        @Html.ValidationMessage("Ap3")
+    </div>
+
+    <div class="form-group">
+        <label>Definicion de la conferencia</label>
+        <input type="text" class="form-control" placeholder="Definicion" name="Definicion" value="@conferencia.Definicion"/>
+        @Html.ValidationMessage("TituloConf")
+    </div>
+
+    <div class="form-group">
+        <label>Objetivo de la Conferencia</label>
+        <input type="text" class="form-control" placeholder="Objetivo" name="Objetivo" value="@conferencia.Objetivo"/>
+        @Html.ValidationMessage("TituloConf")
+    </div>
+
+    <div class="form-group">
+        <label>Meta final</label>
+        <input type="text" class="form-control" placeholder="Meta Final" name="MetaFinal" value="@conferencia.MetaFinal"/>
+        @Html.ValidationMessage("TituloConf")
+    </div>
+
+    <button class="btn btn-primary">Aplicar</button>
+
+</form>

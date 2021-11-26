@@ -1,0 +1,137 @@
+﻿@{ var compra = ((List<Comprar>)Model);
+    int i = 0;}
+
+
+<link href="/css/Detalle.css" rel="stylesheet" />
+
+
+<body class="index">
+
+    <div class="barra">
+        <div class="contenedor clearfix">
+            <div class="logo">
+                <a href="/Home">
+                    <img src="/img/LOGO.png" alt="logo">
+                </a>
+            </div>
+
+            <div class="menu-movil">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav class="navegacion-principal clearfix">
+                @if (ViewBag.Usuario != "LanRhXXX")
+                {
+                    <a href="/conferencia/conferencias">Conferencias</a>
+                    <a href="/Ponente/ponente">Invitados</a>
+                }
+                else
+                {
+                    <a href="/conferencia/conferencias">Conferencias</a>
+                    <a href="/conferencia/Futuras">Calendario</a>
+                    <a href="/Ponente/ponente">Invitados</a>
+                }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a href="/Auth/Login">Login</a>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a href="/Auth/Logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+                    <a href="/Cuenta/Index">@User.Claims.FirstOrDefault().Value</a>
+                }
+            </nav>
+        </div>
+        <!--.contenedor-->
+    </div>
+    <!--.barra-->
+    <!--.Contenido-->
+
+    <div class="seccion contenedor">
+        <form asp-action="pasadas" method="get">
+            <div class="form-group mb-2">
+                <input style="background-size:cover; " type="search" name="search" value="@ViewBag.Buscar">
+                <button class="button jhan" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    <section class="seccion contenedor">
+        <h2>Eventos Anteriores</h2>
+        <div class="calendario">
+            @foreach (var conferencia in compra)
+            {
+                do
+                {
+                    if (string.Format("{0:MMMM}", conferencia.Conferencia.FechaConf) == string.Format("{0:MMMM}", ViewBag.fecha.AddMonths(i)))
+                    {
+                        <h3>
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            @string.Format("{0:MMMM}", ViewBag.fecha.AddDays(i))
+                        </h3>
+                        @foreach (var item in compra)
+                        {
+                            @if (string.Format("{0:MMMM}", item.Conferencia.FechaConf) == string.Format("{0:MMMM}", ViewBag.fecha.AddMonths(i)))
+                            {
+                                <div class="dia">
+                                    <p class="titulo">@item.Conferencia.TituloConf</p>
+                                    <a class="course-card--image-wrapper--Sxd90" href="/conferencia/Detalle?idConferencia=@item.Conferencia.Id">
+                                        <img class="imgFuturas" alt="" width="240" height="135" src="@item.Conferencia.ImagePath" srcset="@item.Conferencia.ImagePath 1x, @item.Conferencia.ImagePath 2x">
+                                    </a>
+
+                                    <p><i class="fa fa-clock-o" aria-hidden="true"></i> @string.Format("{0: hh:mm tt}", item.Conferencia.FechaConf)</p>
+                                    <p><i class="fa fa-calendar" aria-hidden="true"></i> @string.Format("{0:dd MMMM yyyy}", item.Conferencia.FechaConf)</p>
+                                    <p><i class="fa fa-user" aria-hidden="true"></i> @item.Conferencia.Ponentes.NomApe</p>
+                                    <div class="bntFut">
+                                        <a href="#" class="button hollow ">Acceder a conferencia</a>
+                                    </div>
+
+                                </div>
+                            }
+                        }
+                    }
+                    i--;
+                } while (conferencia.Conferencia.FechaConf <= ViewBag.fecha.AddMonths(i + 1));
+            }
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="contenedor clearfix">
+            <div class="footer-informacion">
+                <h3>Sobre <span>gold conference</span></h3>
+                <p>
+                    Somos su conexión virtual a los conferencistas más destacadas y renombradas de Perú, Latinoamérica y el Mundo. Actualmente, abarcamos el continente americano acercando las mentes más brillantes de todo el mundo a las empresas e instituciones que buscan una figura sobresaliente para sus eventos privados y corporativos. Contamos con más de 20 conferencistas de una gran variedad de disciplinas centradas únicamente en tecnologías como HTML5, XML, CSS, JavaScript, PHP, WordPress), entre otras.
+                    En GOLD CONFERENCE tenemos el ponente ideal para su reunión y presupuesto.
+                </p>
+            </div>
+
+            <div class="ultimos-tweets">
+                <h3>Últimos <span>tweets</span></h3>
+                <a class="twitter-timeline" data-height="400" data-theme="light" data-link-color="#fe4918" href="https://twitter.com/gold_conference">Tweets by </a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+
+            <div class="menu">
+                <h3>Redes <span>sociales</span></h3>
+                <nav class="redes-sociales">
+                    <a href="https://www.facebook.com/Gold-Conf-101088928504837"><i class="fa fa-facebook"></i></a>
+                    <a href="https://twitter.com/gold_conference"><i class="fa fa-twitter"></i></a>
+                    <a href="https://www.youtube.com/channel/UCVbYnjINFhIA_qLPC9zAa8Q"><i class="fa fa-youtube-play"></i></a>
+                    <a href="https://www.instagram.com/GOLDCONF_/"><i class="fa fa-instagram"></i></a>
+
+                </nav>
+            </div>
+        </div>
+
+        <p class="copyright">
+            Todos los derechos Reservados GOLD CONFERENCE 2020.
+        </p>
+
+    </footer>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="/js/Nuestro.js"></script>
+
+</body>
